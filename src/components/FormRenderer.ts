@@ -111,30 +111,30 @@ export class FormRenderer {
     });
   }
 
-  private static setupPreviewListeners(form: Form): void {
-    document.getElementById('submit-form')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      const formData = new FormData(document.getElementById('form-preview-container') as HTMLFormElement);
-      const responses: FormResponse = {
-        formId: form.id,
-        responses: {}
-      };
+  // private static setupPreviewListeners(form: Form): void {
+  //   document.getElementById('submit-form')?.addEventListener('click', (e) => {
+  //     e.preventDefault();
+  //     const formData = new FormData(document.getElementById('form-preview-container') as HTMLFormElement);
+  //     const responses: FormResponse = {
+  //       formId: form.id,
+  //       responses: {}
+  //     };
   
-      form.fields.forEach(field => {
-        if (field.type === 'checkbox') {
-          // Convert FormDataEntryValue[] to string[]
-          responses.responses[field.id] = formData.getAll(field.id)
-            .map(entry => entry.toString()); // Explicit conversion to string
-        } else {
-          // Handle single-value fields
-          const value = formData.get(field.id);
-          responses.responses[field.id] = value ? value.toString() : '';
-        }
-      });
+  //     form.fields.forEach(field => {
+  //       if (field.type === 'checkbox') {
+  //         // Convert FormDataEntryValue[] to string[]
+  //         responses.responses[field.id] = formData.getAll(field.id)
+  //           .map(entry => entry.toString()); // Explicit conversion to string
+  //       } else {
+  //         // Handle single-value fields
+  //         const value = formData.get(field.id);
+  //         responses.responses[field.id] = value ? value.toString() : '';
+  //       }
+  //     });
   
-      saveResponse(responses);
-      alert('Form submitted successfully!');
-      FormBuilder.toggleScreens('form-list');
-    });
-  }
+  //     saveResponse(responses);
+  //     alert('Form submitted successfully!');
+  //     FormBuilder.toggleScreens('form-list');
+  //   });
+  // }
 }

@@ -1,7 +1,7 @@
 // Initialize core components
 import { FormBuilder } from './components/FormBuilder';
 import { FormRenderer } from './components/FormRenderer';
-import { loadForms, saveForm } from './storage/storage';
+import { loadForms } from './storage/storage';
 
 // App State
 let currentFormId: string | null = null;

@@ -142,7 +142,7 @@ export class FormBuilder {
   }
 
   static toggleScreens(screenId: string): void {
-    const leftPanel = document.querySelector('.left-panel')!;
+    // const leftPanel = document.querySelector('.left-panel')!;
     const formsList = document.getElementById('form-list')!;
     const formBuilder = document.getElementById('form-builder')!;
 
