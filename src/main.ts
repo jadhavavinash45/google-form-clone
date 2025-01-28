@@ -10,6 +10,7 @@ let currentFormId: string | null = null;
 document.getElementById('create-new-form')?.addEventListener('click', () => {
   currentFormId = null;
   FormBuilder.initialize();
+  console.log(currentFormId);
 });
 
 // Load existing forms on startup
