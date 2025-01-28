@@ -15,6 +15,7 @@ document.getElementById('create-new-form')?.addEventListener('click', () => {
 // Load existing forms on startup
 window.addEventListener('load', () => {
   const forms = loadForms();
+  FormRenderer.renderFormList(forms);
 
   // Always show the form list on load
   document.getElementById('form-list')?.classList.remove('hidden');
