@@ -19,6 +19,7 @@ export class FormBuilder {
   }
 
   private static renderFormEditor(): void {
+    console.log(this.currentForm.fields)
     const editor = document.getElementById('form-editor')!;
     editor.innerHTML = `
       <div class="form-header">
@@ -39,6 +40,12 @@ export class FormBuilder {
       if (field.type !== 'text') {
         this.setupOptionListeners(field);
       }
+    });
+
+    document.querySelectorAll('.field-label').forEach((input, index) => {
+      input.addEventListener('input', (e) => {
+        this.currentForm.fields[index].label = (e.target as HTMLInputElement).value;
+      });
     });
   }
 
@@ -88,6 +95,17 @@ export class FormBuilder {
     // Scroll to new field
     const lastField = document.querySelector(`[data-field-id="${newField.id}"]`);
     lastField?.scrollIntoView({ behavior: 'smooth' });
+
+    // document.querySelectorAll('.delete-field').forEach(button => {
+    //   button.addEventListener('click', (e) => {
+    //     const fieldEditor = (e.target as HTMLElement).closest('.field-editor');
+    //     if (fieldEditor instanceof HTMLElement) {
+    //       const fieldId = fieldEditor.dataset.fieldId;
+    //       this.currentForm.fields = this.currentForm.fields.filter(f => f.id !== fieldId);
+    //       this.renderFormEditor();
+    //     }
+    //   });
+    // });
   }
 
   private static setupEventListeners(): void {
@@ -105,7 +123,11 @@ export class FormBuilder {
       // Refresh the form list
       const forms = loadForms();
       FormRenderer.renderFormList(forms);
+      this.currentForm.fields = [];
       this.toggleScreens('form-list');
+
+      const form = loadForms().find(f => f.id === this.currentForm.id);
+      if (form) FormRenderer.renderFormPreview(form);
     });
 
     // Add title change listener

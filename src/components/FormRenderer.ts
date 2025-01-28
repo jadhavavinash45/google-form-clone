@@ -1,6 +1,6 @@
 // src/components/FormRenderer.ts
 import { Form, FormField, FormResponse } from '../types/interfaces';
-import { loadForms, saveResponse } from '../storage/storage';
+import { FORM_STORAGE_KEY, loadForms, saveResponse } from '../storage/storage';
 import { FormBuilder } from './FormBuilder';
 
 export class FormRenderer {
@@ -39,8 +39,11 @@ export class FormRenderer {
       </form>
     `;
 
-    this.setupPreviewListeners(form);
-    FormBuilder.toggleScreens('form-preview');
+    /**
+     * Below lines were causing infinite calls resulting in max callstack
+     */
+    // this.setupPreviewListeners(form);
+    // FormBuilder.toggleScreens('form-preview');
   }
 
   private static renderPreviewField(field: FormField): string {
@@ -95,6 +98,15 @@ export class FormRenderer {
         const formId = button.closest('.form-card')?.getAttribute('data-form-id');
         const form = loadForms().find(f => f.id === formId);
         if (form) this.renderFormPreview(form);
+      });
+    });
+
+    document.querySelectorAll('.delete-form').forEach(button => {
+      button.addEventListener('click', () => {
+        const formId = button.closest('.form-card')?.getAttribute('data-form-id');
+        const forms = loadForms().filter(f => f.id !== formId);
+        localStorage.setItem(FORM_STORAGE_KEY, JSON.stringify(forms));
+        this.renderFormList(forms); // Refresh list
       });
     });
   }

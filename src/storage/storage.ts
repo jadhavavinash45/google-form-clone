@@ -1,6 +1,6 @@
 import { Form, FormResponse } from "../types/interfaces";
 
-const FORM_STORAGE_KEY = 'forms';
+export const FORM_STORAGE_KEY = 'forms';
 const RESPONSE_STORAGE_KEY = 'responses';
 
 export const saveForm = (form: Form): void => {
@@ -16,5 +16,7 @@ export const loadForms = (): Form[] => {
 };
 
 export const saveResponse = (response: FormResponse): void => {
-  // Similar implementation
+  const existingResponses = JSON.parse(localStorage.getItem(RESPONSE_STORAGE_KEY) || '[]');
+  existingResponses.push(response);
+  localStorage.setItem(RESPONSE_STORAGE_KEY, JSON.stringify(existingResponses));
 };
